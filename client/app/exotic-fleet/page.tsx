@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Suspense } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
@@ -157,7 +157,7 @@ const exoticFleet: ExoticVehicle[] = [
     }
 ]
 
-export default function ExoticFleetPage() {
+function ExoticFleetContent() {
     const searchParams = useSearchParams()
     const [filter, setFilter] = useState<'All' | Category>('All')
     const [selectedVehicle, setSelectedVehicle] = useState<string>('')
@@ -528,5 +528,13 @@ export default function ExoticFleetPage() {
                 )}
             </section>
         </main>
+    )
+}
+
+export default function ExoticFleetPage() {
+    return (
+        <Suspense fallback={<div className="min-h-screen bg-black" />}>
+            <ExoticFleetContent />
+        </Suspense>
     )
 }
